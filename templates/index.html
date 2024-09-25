@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumor Detection App</title>
+
+    <!-- Font import for a clean look -->
+    <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Calibri', sans-serif;
+            background-color: #2F6690;
+            color: #3A7CA5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Header styling */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #3A7CA5;
+        }
+
+        /* Main container for form and information */
+        .container {
+            text-align: center;
+            padding: 30px;
+            background-color: #81C3D7;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+
+        /* Styling for file input */
+        input[type="file"] {
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid #3A7CA5;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Button styling */
+        button {
+            padding: 10px 20px;
+            background-color: #D9DCD6;
+            color: #3A7CA5;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #16425B;
+            color: #fff;
+        }
+
+        /* Information section styling */
+        .info {
+            margin-top: 30px;
+            font-size: 1rem;
+            color: #3A7CA5;
+        }
+
+        .info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .info p {
+            margin-bottom: 10px;
+        }
+
+        /* Result section styling */
+        .result {
+            margin-top: 30px;
+            text-align: center;
+            color: #3A7CA5;
+        }
+
+        .result img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Image for Prediction</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        <!-- Information about the AI Model -->
+        <div class="info">
+            <h2>About This AI Model</h2>
+            <p>This AI model has been trained to identify and predict various types of brain tumors from MRI and CT scan images. It was developed by Aditya Ranjan, with the goal of assisting medical professionals in the early detection and diagnosis of brain gliomas and other related tumors.</p>
+        </div>
+
+        <!-- Result section displaying prediction -->
+        {% if prediction is not none %}
+            <div class="result">
+                <h2>Prediction: {{ 'Tumor' if prediction == 1 else 'No Tumor' }}</h2>
+                <h3>Confidence Score: {{ score }}</h3>
+                <img src="data:image/png;base64,{{ image }}" alt="Detected Image">
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
